@@ -31,14 +31,7 @@ function Node(operator, value, left, right) {
     }
   }
 
-  return {
-    operator,
-    value,
-    left,
-    right,
-    result,
-    toString,
-  };
+  return { result, toString };
 }
 
 const tree = Node(
