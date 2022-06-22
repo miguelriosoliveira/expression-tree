@@ -2,7 +2,7 @@ const assert = require('assert');
 
 const Node = (operator, value, left, right) => {
   const result = function () {
-    switch (this.operator) {
+    switch (operator) {
       case '+':
         return left.result() + right.result();
       case '-':
@@ -17,7 +17,7 @@ const Node = (operator, value, left, right) => {
   };
 
   const toString = function () {
-    switch (this.operator) {
+    switch (operator) {
       case '+':
         return `(${left.toString()} + ${right.toString()})`;
       case '-':
