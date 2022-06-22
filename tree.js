@@ -1,7 +1,7 @@
 const assert = require('assert');
 
-const Node = (operator, value, left, right) => {
-  const result = function () {
+function Node(operator, value, left, right) {
+  function result() {
     switch (operator) {
       case '+':
         return left.result() + right.result();
@@ -14,9 +14,9 @@ const Node = (operator, value, left, right) => {
       default:
         return value;
     }
-  };
+  }
 
-  const toString = function () {
+  function toString() {
     switch (operator) {
       case '+':
         return `(${left.toString()} + ${right.toString()})`;
@@ -29,7 +29,7 @@ const Node = (operator, value, left, right) => {
       default:
         return value.toString();
     }
-  };
+  }
 
   return {
     operator,
@@ -39,7 +39,7 @@ const Node = (operator, value, left, right) => {
     result,
     toString,
   };
-};
+}
 
 const tree = Node(
   '÷',
