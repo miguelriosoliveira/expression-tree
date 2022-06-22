@@ -2,33 +2,26 @@ const assert = require('assert');
 
 function Node(operator, value, left, right) {
   function result() {
-    switch (operator) {
-      case '+':
-        return left.result() + right.result();
-      case '-':
-        return left.result() - right.result();
-      case 'x':
-        return left.result() * right.result();
-      case '÷':
-        return left.result() / right.result();
-      default:
-        return value;
-    }
+    const switcher = new Proxy(
+      {
+        '+': () => left.result() + right.result(),
+        '-': () => left.result() - right.result(),
+        x: () => left.result() * right.result(),
+        '÷': () => left.result() / right.result(),
+      },
+      {
+        get: (target, key) => target[key] || (() => value),
+      },
+    );
+
+    return switcher[operator]();
   }
 
   function toString() {
-    switch (operator) {
-      case '+':
-        return `(${left.toString()} + ${right.toString()})`;
-      case '-':
-        return `(${left.toString()} - ${right.toString()})`;
-      case 'x':
-        return `(${left.toString()} x ${right.toString()})`;
-      case '÷':
-        return `(${left.toString()} ÷ ${right.toString()})`;
-      default:
-        return value.toString();
-    }
+    const validOperators = ['+', '-', 'x', '÷'];
+    return validOperators.includes(operator)
+      ? `(${left.toString()} ${operator} ${right.toString()})`
+      : value.toString();
   }
 
   return { result, toString };
